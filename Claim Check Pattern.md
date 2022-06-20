@@ -28,3 +28,28 @@ Be mindful for following points before leveraging this pattern:
 
 **Alternative Option of this pattern:**
 An alternative pattern for handling large messages is **[Split](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Sequencer.html "Split")** and **[Aggregate](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Aggregator.html "Aggregate")**.
+
+
+**Leveraging Claim Check Pattern in AWS Services:**
+
+In this article, we will learn about how Claim and Check Pattern using AWS serverless architecture.
+
+As we leanrt from above explanation that a Claim and Check Pattern allows user to provide more than a service limit allows. 
+
+
+Users need to be aware about the payload of the services in their respective project workflow. When it is required to provide more data than a service limit allows, it does so by utilizing presigned URLs from Amazon S3 in this pattern. Let’s see how does it works in a simple step,
+1.	The client supplies presigned URL. *Key consideration:*
+-	The client uses the presigned URL to update items in the S3 bucket.
+-	A presigned URL is provided through the workflow as part of the payload.
+-	A payload is a JSON structure that contains data.
+-	It makes the S3 object available to the components that need it.
+2.	The client sets read or write access, along with the URL expiration time. *Key consideration:*
+-	URL’s expiration time depends on the credential expiration time.
+-	The URL is valid for the duration of the credential’s expiration time.
+3.	A Lambda function creates a role or utilizes IAM credentials to access Amazon S3.
+4.	Amazon S3 responds with a URL that other parties can use to access the object.
+
+**Usecase Example:**
+
+![Claim-Check-Pattern- AWS Serverless drawio](https://user-images.githubusercontent.com/1255516/174529494-ffbf4916-efd4-4031-bcd6-e577850957f2.png)
+
